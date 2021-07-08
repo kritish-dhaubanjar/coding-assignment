@@ -1,5 +1,7 @@
 import config from '../config';
 import axios from '../utils/axios';
+import { withOnlyAttrs } from '../utils/object';
+import { PROFILE_ATTRS } from '../constants/github';
 
 /**
  * Exchange code for an access token.
@@ -38,5 +40,7 @@ export async function getProfile(code) {
     },
   });
 
-  return data;
+  const profile = withOnlyAttrs(data, PROFILE_ATTRS);
+
+  return profile;
 }

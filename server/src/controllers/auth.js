@@ -1,3 +1,4 @@
+import * as authService from '../services/auth';
 import * as githubService from '../services/github';
 import { Request, Response, NextFunction } from 'express';
 
@@ -14,7 +15,9 @@ export async function githubCallback(req, res, next) {
 
     const profile = await githubService.getProfile(code);
 
-    return res.json(profile);
+    const data = await authService.authenticate(profile);
+
+    return res.json(data);
   } catch (error) {
     next(error);
   }
