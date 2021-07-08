@@ -7,6 +7,9 @@
     "start": "node dist",
     "build": "rimraf dist && babel src --out-dir dist",
     "dev": "nodemon --watch .env --watch src --exec babel-node src",
+    "migrate": "babel-node src/migrations/create_table.js",
+    "migrate:rollback": "babel-node src/migrations/drop_table.js",
+    "migrate:refresh": "babel-node src/migrations/drop_table.js && babel-node src/migrations/create_table.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kritish Dhaubanjar",
