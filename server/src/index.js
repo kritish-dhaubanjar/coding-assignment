@@ -1,7 +1,10 @@
 import config from './config';
 import express from 'express';
+import routes from './routes';
 
 const app = express();
+
+app.use('/api', routes);
 
 const { port, host } = config.app;
 
