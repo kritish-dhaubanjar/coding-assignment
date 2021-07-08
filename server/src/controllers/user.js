@@ -36,3 +36,22 @@ export async function show(req, res, next) {
     next(err);
   }
 }
+
+/**
+ *
+ * @param {Request} req
+ * @param {Response} res
+ * @param {NextFunction} next
+ * @returns
+ */
+export async function articles(req, res, next) {
+  try {
+    const { id: userId } = req.params;
+
+    const user = await userService.findArticlesByUserId(userId);
+
+    return res.json(user);
+  } catch (err) {
+    next(err);
+  }
+}
