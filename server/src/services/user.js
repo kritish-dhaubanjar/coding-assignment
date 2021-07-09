@@ -1,13 +1,19 @@
 import User from '../models/User';
 import Article from '../models/Article';
+import * as redis from '../utils/redis';
+import { USER } from '../constants/table';
 
 /**
  * Find all users.
  *
  * @returns {Promise}
  */
-export function findAll() {
-  const users = User.findAll();
+export async function findAll() {
+  const users = await redis.many(USER, `PK`, async () => {
+    const { Items } = await User.findAll();
+
+    return Items;
+  });
 
   return users;
 }
@@ -18,8 +24,14 @@ export function findAll() {
  * @param {string} id
  * @returns {Promise}
  */
-export function findById(id) {
-  const user = User.findById(id);
+export async function findById(id) {
+  const user = await redis.get(USER, `USER#${id}`, async () => {
+    const { Items } = await User.findById(id);
+
+    if (!Items.length) throw Error();
+
+    return Items[0];
+  });
 
   return user;
 }
@@ -30,8 +42,14 @@ export function findById(id) {
  * @param {string} id
  * @returns {Promise}
  */
-export function findArticlesByUserId(id) {
-  const articles = Article.findByUserId(id);
+export async function findArticlesByUserId(id) {
+  const hash = `USER#${id}#ARTICLE`;
+
+  const articles = await redis.many(hash, 'SK', async () => {
+    const { Items } = await Article.findByUserId(id);
+
+    return Items;
+  });
 
   return articles;
 }

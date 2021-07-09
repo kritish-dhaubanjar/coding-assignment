@@ -1,4 +1,4 @@
-import { docClient } from '../db';
+import { docClient } from '../config/db';
 import { TABLE_NAME } from '../constants/table';
 
 class User {

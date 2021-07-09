@@ -1,4 +1,4 @@
-import { dynamodb } from '../db';
+import { dynamodb } from '../config/db';
 import { TABLE_NAME } from '../constants/table';
 
 const schema = {

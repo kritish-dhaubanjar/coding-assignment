@@ -1,12 +1,17 @@
 import Article from '../models/Article';
+import * as redis from '../utils/redis';
+import { ARTICLE } from '../constants/table';
 
 /**
  * Find all articles.
  *
  * @returns {Promise}
  */
-export function findAll() {
-  const articles = Article.findAll();
+export async function findAll() {
+  const articles = await redis.many(ARTICLE, 'SK', async () => {
+    const { Items } = await Article.findAll();
+    return Items;
+  });
 
   return articles;
 }
@@ -17,8 +22,14 @@ export function findAll() {
  * @param {string} id
  * @returns {Promise}
  */
-export function findById(id) {
-  const article = Article.findById(id);
+export async function findById(id) {
+  const article = await redis.get(ARTICLE, `ARTICLE#${id}`, async () => {
+    const { Items } = await Article.findById(id);
+
+    if (!Items.length) throw Error();
+
+    return Items[0];
+  });
 
   return article;
 }
@@ -30,10 +41,14 @@ export function findById(id) {
  * @param {Object} data
  * @returns {Promise}
  */
-export function save(userId, data) {
-  const article = Article.save(userId, data);
+export async function save(userId, data) {
+  const { Attributes } = await Article.save(userId, data);
 
-  return article;
+  const hash = `USER#${userId}#ARTICLE`;
+  redis.put(hash, Attributes.SK, Attributes);
+  redis.put(ARTICLE, Attributes.SK, Attributes);
+
+  return Attributes;
 }
 
 /**
@@ -44,10 +59,14 @@ export function save(userId, data) {
  * @param {Object} data
  * @returns {Promise}
  */
-export function update(userId, articleId, data) {
-  const article = Article.update(userId, articleId, data);
+export async function update(userId, articleId, data) {
+  const { Attributes } = await Article.update(userId, articleId, data);
 
-  return article;
+  const hash = `USER#${userId}#ARTICLE`;
+  redis.put(hash, Attributes.SK, Attributes);
+  redis.put(ARTICLE, Attributes.SK, Attributes);
+
+  return Attributes;
 }
 
 /**
@@ -57,8 +76,12 @@ export function update(userId, articleId, data) {
  * @param {articleId} articleId
  * @returns {Promise}
  */
-export function destroy(userId, articleId) {
-  const article = Article.destroy(userId, articleId);
+export async function destroy(userId, articleId) {
+  const { Attributes } = await Article.destroy(userId, articleId);
 
-  return article;
+  const hash = `USER#${userId}#ARTICLE`;
+  redis.forget(hash, Attributes.SK);
+  redis.forget(ARTICLE, Attributes.SK);
+
+  return Attributes;
 }

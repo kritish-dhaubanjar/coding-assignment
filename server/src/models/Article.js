@@ -1,6 +1,6 @@
-import { docClient } from '../db';
-import { TABLE_NAME } from '../constants/table';
 import { v4 as uuidv4 } from 'uuid';
+import { docClient } from '../config/db';
+import { TABLE_NAME } from '../constants/table';
 
 class Article {
   /**

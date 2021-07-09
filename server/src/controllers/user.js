@@ -48,9 +48,9 @@ export async function articles(req, res, next) {
   try {
     const { id: userId } = req.params;
 
-    const user = await userService.findArticlesByUserId(userId);
+    const articles = await userService.findArticlesByUserId(userId);
 
-    return res.json(user);
+    return res.json(articles);
   } catch (err) {
     next(err);
   }
