@@ -62,6 +62,11 @@ AWS_SECRET_ACCESS_KEY=
 AWS_DEFAULT_REGION=us-east-1
 AWS_ENDPOINT=http://localhost:8000
 
+# Redis
+REDIS_PORT=6379
+REDIS_HOST=localhost
+REDIS_PASSWORD=
+
 # Github OAuth
 GITHUB_CLIENT_ID=
 GITHUB_CLIENT_SECRET=
@@ -80,7 +85,13 @@ Migrate: `yarn migrate`\
 Rollback: `yarn migrate:rollback`\
 Refresh: `yarn migrate:refresh`
 
-#### 5. Development Setup
+#### 5. Starting local Redis server
+
+1. Follow Redis Quick Start from [here](https://redis.io/topics/quickstart).
+
+2. Start redis server by executing `redis-server` without any argument.
+
+#### 6. Development Setup
 
 ```
 yarn dev
