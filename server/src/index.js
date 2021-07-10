@@ -1,3 +1,4 @@
+import cors from 'cors';
 import morgan from 'morgan';
 import config from './config';
 import express from 'express';
@@ -6,6 +7,7 @@ import * as errorHandler from './middlewares/errorHandler';
 
 const app = express();
 app.use(morgan('combined'));
+app.use(cors());
 app.use(express.json());
 
 app.use('/api', routes);
