@@ -1,9 +1,11 @@
+import morgan from 'morgan';
 import config from './config';
 import express from 'express';
 import routes from './routes';
 import * as errorHandler from './middlewares/errorHandler';
 
 const app = express();
+app.use(morgan('combined'));
 app.use(express.json());
 
 app.use('/api', routes);

@@ -2,6 +2,7 @@ import User from '../models/User';
 import Article from '../models/Article';
 import * as redis from '../utils/redis';
 import { USER } from '../constants/table';
+import ItemNotFoundException from '../errors/ItemNotFoundException';
 
 /**
  * Find all users.
@@ -28,7 +29,7 @@ export async function findById(id) {
   const user = await redis.get(USER, `USER#${id}`, async () => {
     const { Items } = await User.findById(id);
 
-    if (!Items.length) throw Error();
+    if (!Items.length) throw new ItemNotFoundException();
 
     return Items[0];
   });

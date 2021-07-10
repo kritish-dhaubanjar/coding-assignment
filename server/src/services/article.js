@@ -1,6 +1,7 @@
 import Article from '../models/Article';
 import * as redis from '../utils/redis';
 import { ARTICLE } from '../constants/table';
+import ItemNotFoundException from '../errors/ItemNotFoundException';
 
 /**
  * Find all articles.
@@ -26,7 +27,7 @@ export async function findById(id) {
   const article = await redis.get(ARTICLE, `ARTICLE#${id}`, async () => {
     const { Items } = await Article.findById(id);
 
-    if (!Items.length) throw Error();
+    if (!Items.length) throw new ItemNotFoundException();
 
     return Items[0];
   });

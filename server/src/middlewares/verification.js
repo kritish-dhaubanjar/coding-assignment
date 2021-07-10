@@ -1,11 +1,12 @@
 import config from '../config';
 import jwt from 'jsonwebtoken';
+import NotAuthenticatedException from '../errors/NotAuthenticatedException';
 
 export function verifyAccessToken(req, res, next) {
   const { authorization } = req.headers;
 
   try {
-    if (!authorization) throw Error();
+    if (!authorization) throw new NotAuthenticatedException();
 
     const [_, accessToken] = authorization.trim().split(' ');
 
@@ -17,6 +18,6 @@ export function verifyAccessToken(req, res, next) {
 
     next();
   } catch (err) {
-    next(err);
+    next(new NotAuthenticatedException(err.message));
   }
 }
