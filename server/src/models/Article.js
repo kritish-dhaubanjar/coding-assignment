@@ -68,16 +68,16 @@ class Article {
    * @param {Object} data
    * @returns {Promise}
    */
-  static save(userId, data) {
+  static save(user, data) {
     const id = uuidv4();
 
     const params = {
       TableName: TABLE_NAME,
       Item: {
-        PK: `USER#${userId}`,
+        PK: `USER#${user.id}`,
         SK: `ARTICLE#${id}`,
         id,
-        userId,
+        author: user,
         ...data,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),

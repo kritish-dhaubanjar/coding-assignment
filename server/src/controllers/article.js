@@ -46,10 +46,10 @@ export async function show(req, res, next) {
  */
 export async function store(req, res, next) {
   try {
-    const { id: userId } = req.user;
+    const author = req.user;
     const article = req.body;
 
-    const data = await articleService.save(userId, article);
+    const data = await articleService.save(author, article);
 
     return res.json(data);
   } catch (err) {

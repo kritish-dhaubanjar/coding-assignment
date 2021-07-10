@@ -1,6 +1,8 @@
 import Article from '../models/Article';
 import * as redis from '../utils/redis';
 import { ARTICLE } from '../constants/table';
+import { withOnlyAttrs } from '../utils/object';
+import { PROFILE_ATTRS } from '../constants/github';
 import ItemNotFoundException from '../errors/ItemNotFoundException';
 
 /**
@@ -38,14 +40,16 @@ export async function findById(id) {
 /**
  * Store an article of auth user.
  *
- * @param {string} userId
+ * @param {Object} user
  * @param {Object} data
  * @returns {Promise}
  */
-export async function save(userId, data) {
-  const { Attributes } = await Article.save(userId, data);
+export async function save(user, data) {
+  const author = withOnlyAttrs(user, PROFILE_ATTRS);
 
-  const hash = `USER#${userId}#ARTICLE`;
+  const { Attributes } = await Article.save(author, data);
+
+  const hash = `USER#${user.id}#ARTICLE`;
   redis.put(hash, Attributes.SK, Attributes);
   redis.put(ARTICLE, Attributes.SK, Attributes);
 
