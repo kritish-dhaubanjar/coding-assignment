@@ -6,6 +6,7 @@ const config = {
   app: {
     port: process.env.APP_PORT,
     host: process.env.APP_HOST,
+    redirectURL: process.env.REACT_APP,
   },
   jwt: {
     secret: process.env.JWT_SECRET,
