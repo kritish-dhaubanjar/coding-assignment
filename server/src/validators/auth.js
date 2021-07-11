@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from "express";
 
 const githubCallback = Joi.object({
   code: Joi.string().required().label("Authorization Code"),
+  state: Joi.string().label("State"),
 });
 
 /**

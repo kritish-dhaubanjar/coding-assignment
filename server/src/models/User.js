@@ -56,7 +56,13 @@ class User {
       },
     };
 
-    return docClient.put(params).promise();
+    return new Promise((resolve, reject) => {
+      docClient.put(params, (err, data) => {
+        if (err) reject(err);
+
+        if (data) resolve({ Attributes: params.Item });
+      });
+    });
   }
 }
 
