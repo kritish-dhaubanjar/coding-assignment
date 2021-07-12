@@ -1,7 +1,6 @@
-# Coding Assignment
+## Coding Assignment [Express, DynamoDB, Redis]
 
-## Description:
-
+## Description
 Create a Restful API for CRUD application using expressJs framework that has
 following features.
 
@@ -21,3 +20,8 @@ following features.
 - Should share code in github with proper commits history.
 - Should have a readme.md file with instruction to run in other computer.
 - Should share a migration script for dynamodb such that the tables can be created in other hosts.
+
+## Development Setup
+1. [Setup Node Server](server/README.md)
+2. [Setup React App](app/README.md)
+
