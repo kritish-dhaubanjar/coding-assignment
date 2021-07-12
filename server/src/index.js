@@ -19,7 +19,7 @@ app.use(errorHandler.genericErrorHandler);
 
 const { port, host } = config.app;
 
-if (cluster.isPrimary) {
+if (cluster.isPrimary || cluster.isMaster) {
   for (let i = 0; i < noOfCPUs; i++) {
     cluster.fork();
   }
