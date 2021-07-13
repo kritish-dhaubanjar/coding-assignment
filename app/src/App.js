@@ -2,6 +2,7 @@ import Router from './Router';
 import axios from './utils/axios';
 import routes from './constants/routes';
 import AuthContext from './context/auth';
+import { withRouter } from 'react-router';
 import { getCookie } from './utils/cookie';
 import ToastContext from './context/toast';
 import { useEffect, useState } from 'react';
@@ -9,7 +10,7 @@ import RedirectContext from './context/redirect';
 import AlertSnakbar from './components/common/AlertSnakbar';
 import NavigationBar from './components/common/NavigationBar';
 
-const App = () => {
+const App = (props) => {
   const accessToken = getCookie('accessToken');
 
   const [init, setInit] = useState(false);
@@ -25,10 +26,17 @@ const App = () => {
 
   useEffect(() => {
     if (accessToken) {
-      axios.get('/auth/user').then(({ data }) => {
-        setAuthUser(data);
-        setInit(true);
-      });
+      axios
+        .get('/auth/user')
+        .then(({ data }) => {
+          setAuthUser(data);
+        })
+        .catch((_) => {
+          props.history.replace(routes.SIGNIN);
+        })
+        .finally(() => {
+          setInit(true);
+        });
     } else {
       setInit(true);
     }
@@ -52,4 +60,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withRouter(App);

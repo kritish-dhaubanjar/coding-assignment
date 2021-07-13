@@ -1,6 +1,6 @@
 import axios from 'axios';
 import config from '../config';
-import { getCookie } from '../utils/cookie';
+import { getCookie, clearCookie } from '../utils/cookie';
 
 axios.defaults.headers.post['Accept'] = 'application/json';
 
@@ -29,6 +29,7 @@ axios.interceptors.response.use(
     return response;
   },
   (error) => {
+    if (error.response.status === 401) clearCookie();
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
