@@ -25,3 +25,16 @@ following features.
 1. [Setup Node Server](server)
 2. [Setup React App](app)
 
+## Deployment Setup with Docker
+1. Build and run application with `docker-compose up`.
+
+![image](https://user-images.githubusercontent.com/25634165/125441365-4440d190-56c3-44af-86da-a49bc2645d10.png)
+
+![image](https://user-images.githubusercontent.com/25634165/125441658-83541d9a-1d87-4ab8-a3f6-38c3a407f780.png)
+
+2. Change the permissions of `docker/dynamodb` volume. `eg: chmod -R 777 docker/dynamodb`.
+3. Manually run the migration with:
+```
+docker exec -it <codeassignment:server container id> sh
+yarn migrate
+```
