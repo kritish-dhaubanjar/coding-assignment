@@ -82,6 +82,7 @@ yarn
 ```
 
 Migrate: `yarn migrate`\
+Migrate: `npm migrate --dir=src`\
 Rollback: `yarn migrate:rollback`\
 Refresh: `yarn migrate:refresh`
 

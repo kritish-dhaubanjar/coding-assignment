@@ -7,20 +7,16 @@
     "start": "node dist",
     "build": "rimraf dist && babel src --out-dir dist",
     "dev": "nodemon --watch .env --watch src --exec babel-node src",
-    "migrate": "babel-node src/migrations/create_table.js",
+    "migrate": "babel-node $npm_config_dir/migrations/create_table.js",
     "migrate:rollback": "babel-node src/migrations/drop_table.js",
     "migrate:refresh": "babel-node src/migrations/drop_table.js && babel-node src/migrations/create_table.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Kritish Dhaubanjar",
   "license": "ISC",
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ]
-  },
   "dependencies": {
     "@babel/node": "^7.14.7",
+    "@babel/runtime": "^7.16.3",
     "aws-sdk": "^2.940.0",
     "axios": "^0.21.1",
     "cors": "^2.8.5",
@@ -35,6 +31,7 @@
   "devDependencies": {
     "@babel/cli": "^7.14.5",
     "@babel/core": "^7.14.6",
+    "@babel/plugin-transform-runtime": "^7.16.0",
     "@babel/preset-env": "^7.14.7",
     "nodemon": "^2.0.9",
     "rimraf": "^3.0.2"

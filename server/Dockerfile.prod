@@ -1,0 +1,19 @@
+# Stage I
+FROM node:alpine as builder
+
+WORKDIR /server
+COPY ["package.json", "yarn.lock", "./"]
+RUN yarn
+COPY ./ ./
+CMD ["yarn", "build"]
+
+# Stage II
+FROM node:alpine
+WORKDIR /server
+COPY ["package.json", "yarn.lock", "./"]
+RUN yarn install --production
+COPY --from=builder /server/dist ./dist
+COPY ./.env ./
+CMD ["yarn", "start"]
+
+EXPOSE 8080

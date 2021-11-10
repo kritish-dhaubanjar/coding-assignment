@@ -38,5 +38,16 @@ following features.
 5. Manually run the migration with:
 ```
 docker exec -it <codeassignment:server container id> sh
-yarn migrate
+npm run migrate --dir=src
+```
+
+## Deployment Setup with Docker (Production)
+1. Clone Repository
+2. Configure `.env` in `app` & `server`.
+3. Build and run application with `docker-compose -f ./docker-compose.prod.yml up`.
+4. Change the permissions of `docker/dynamodb` volume. `eg: chmod -R 777 docker/dynamodb`.
+5. Manually run the migration with:
+```
+docker exec -it <codeassignment:server container id> sh
+npm run migrate --dir=dist
 ```
