@@ -45,6 +45,11 @@ npm run migrate --dir=src
 1. Clone Repository
 2. Configure `.env` in `app` & `server`.
 3. Build and run application with `docker-compose -f ./docker-compose.prod.yml up`.
+
+![image](https://user-images.githubusercontent.com/25634165/141159455-b46a923e-8b1e-43e4-a7b8-a3d806824674.png)
+
+![image](https://user-images.githubusercontent.com/25634165/141159336-23831e59-fe9f-42c6-9d9b-c8a2faf8722e.png)
+
 4. Change the permissions of `docker/dynamodb` volume. `eg: chmod -R 777 docker/dynamodb`.
 5. Manually run the migration with:
 ```
