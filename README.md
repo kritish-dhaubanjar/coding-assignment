@@ -56,3 +56,15 @@ npm run migrate --dir=src
 docker exec -it <codeassignment:server container id> sh
 npm run migrate --dir=dist
 ```
+
+## Deployment Setup with Docker (Docker Hub)
+
+https://hub.docker.com/r/kritishdhaubanjar/codeassignment/tags
+
+1.`docker-compose -f ./docker-compose.hub.yml up`.\
+2. Change the permissions of `docker/dynamodb` volume. `eg: chmod -R 777 docker/dynamodb`.\
+3. Manually run the migration with:
+```
+docker exec -it <codeassignment:server container id> sh
+npm run migrate --dir=dist
+```
