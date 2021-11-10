@@ -1,0 +1,49 @@
+version: "3.2"
+
+services:
+  dynamodb-local:
+    command: "-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
+    image: "amazon/dynamodb-local:latest"
+    container_name: dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./docker/dynamodb:/home/dynamodblocal/data"
+    working_dir: /home/dynamodblocal
+    expose:
+      - "8000"
+
+  redis:
+    command: "redis-server"
+    image: "redis:alpine"
+    container_name: redis
+    ports:
+      - "6379:6379"
+    expose:
+      - "6379"
+
+  server:
+    depends_on:
+      - redis
+      - dynamodb-local
+    image: "kritishdhaubanjar/codeassignment:server"
+    container_name: server
+    ports:
+      - "8080:8080"
+    expose:
+      - "8080"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      AWS_ENDPOINT: http://dynamodb-local:8000
+      REACT_APP: http://localhost
+
+  app:
+    depends_on:
+      - server
+    image: "kritishdhaubanjar/codeassignment:app"
+    container_name: app
+    ports:
+      - "80:80"
+    expose:
+      - "80"
