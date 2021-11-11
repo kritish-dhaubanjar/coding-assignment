@@ -25,7 +25,7 @@ following features.
 1. [Setup Node Server](server)
 2. [Setup React App](app)
 
-## Deployment Setup with Docker
+## Deployment Setup with Docker (Development)
 1. Clone Repository
 2. Configure `.env` in `app` & `server`.
 3. Build and run application with `docker-compose up`.
